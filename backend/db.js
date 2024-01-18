@@ -1,5 +1,4 @@
 const Pool=require('pg').Pool;
-
 const users = new Pool({
     user: "postgres",
     host:"localhost",
