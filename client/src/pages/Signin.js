@@ -2,8 +2,8 @@
 import "./styles.css";
 function Signin() {
 return (
-    <section class=" bg-[#d82a2ad4]  min-h-screen flex items-center justify-center">
-    <div class=" bg-[#f4eaea] flex rounded-2xl shadow-2xl shadow-black py-2 px-0.25">
+    <section class="bg-red-100  min-h-screen flex items-center justify-center">
+    <div class=" bg-white rounded-2xl shadow-2xl shadow-black py-2 px-0.25">   
         <div class="px-16">
         <h2 class="pt-4 text-black font-bold text-2xl"> Login</h2>
         <p class="text-sm  mt-1">
@@ -11,14 +11,14 @@ return (
         </p>
         <form action class="flex flex-col gap-2">
             <input
-            class="py-1 px-2 mt-10  rounded-2xl border border-blue-300"
+            class="py-1 px-2 mt-10 rounded-xl border border-blue-300"
             type="text"
             name="email"
             placeholder="Enter Email"
             />
             <div class="relative">
             <input
-            class="w-full py-1 px-2 mt-2 rounded-2xl  border-blue-300"
+            class="w-full py-1 px-2 mt-2 rounded-xl border-blue-300"
             type="password"
             name="password"
             placeholder="Enter Password"/>
