@@ -1,21 +1,23 @@
-import express from "express";
-import crypto from "crypto";
-import path from "path";
-import bodyParser from "body-parser";
-import adminController from "./src/admins/controller"
-import userController from "./src/users/controller"
-import bcrypt from "bcrypt";
+const express = require("express");
+const nodemailer=require('nodemailer');
+const crypto = require("crypto");
+const path = require("path");
+const bodyParser = require("body-parser");
+const {sendOTP}=require("./emailService/controller/emailController")
+const adminController = require("./src/admins/controller");
+const userController = require("./src/users/controller");
+const bcrypt = require("bcrypt");
 const app=express()
 app.use(bodyParser.json());
 const saltrounds=10;
 
-async function encryptOTP(message,key,iv){
-    const cipher=crypto.createCipheriv('aes-256-gcm',Buffer.from(key,'hex'),Buffer.from(iv,'hex'));
-    let encrypted = cipher.update(message,'utf-8','hex');
-    encrypted+=cipher.final('hex');
-    const tag=cipher.getAuthTag();
-    return{encrypted,tag};
-}
+// async function encryptOTP(message,key,iv){
+//     const cipher=crypto.createCipheriv('aes-256-gcm',Buffer.from(key,'hex'),Buffer.from(iv,'hex'));
+//     let encrypted = cipher.update(message,'utf-8','hex');
+//     encrypted+=cipher.final('hex');
+//     const tag=cipher.getAuthTag();
+//     return{encrypted,tag};
+// }
 //PUT THIS IN THE FRONTEND
 // function decryptMessage(encryptedMessage, key, iv, tag) {
 //     const decipher = crypto.createDecipheriv('aes-256-gcm', Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'));
@@ -25,14 +27,7 @@ async function encryptOTP(message,key,iv){
 //     return decrypted;
 // }
 
-async function genOTP(){
-    try{
-        return Number(Math.floor(1000000*Math.random()));
-    }
-    catch(error){
-        throw error;
-    }
-}
+
 
 async function emailOTP(email){
     try{
@@ -53,6 +48,18 @@ async function hashPassword(password){
     }
 }
 
+async function compareOTP(OTPReceived,OTPDatabase){
+    try{
+        console.log(OTPReceived);
+        console.log(OTPDatabase);
+        console.log(OTPReceived === OTPDatabase)
+        return OTPReceived === OTPDatabase;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
 async function comparePasswords(hash,password){
     try{
         const match=await bcrypt.compare(password,hash);
@@ -64,33 +71,23 @@ async function comparePasswords(hash,password){
 }
 
 //admin routes
+app.post('/admins/emailOTP',sendOTP);
 
-app.post('/admins/generateOTP',async(req,res)=>{
-    const otp=await genOTP();
-    const email=req.body.email;
-    await emailOTP(email);    //send email using agora etc
-
-});
-
-app.post('/admins/verifyEmail',async(req,res)=>{
-    const email=req.body.email;
-    if(adminController.checkEmailExists(email).length>0){
-        res.status(403).json({ message: 'Admin already exists' });
+app.post('/admins/verify',async(req,res)=>{
+    const {email,OTP}=req.body;
+    const results=await adminController.getDetailsForVerification(email);
+    if(compareOTP(OTP,Number(results[0].otp))===false){
+        res.status(200).json({message:"Email successfully verified"});
     }
     else{
-        res.status(200).json({message:'accept email'});
+        adminController.deleteEmailIfOTPUnsuccessful(email);
+        res.status(400).json({message:"Email verification failed"});
     }
 });
-app.post('/admins/signup',async(req,res)=>{
-    const details=req.body;
-
-});
-app.post('/admins/signin',);
+// app.post('/admins/signin',);
 //user routes
-app.post('/users/signup',async(req,res){
-});
-app.post('/users/signin',async(req,res){
-
-});
+app.post('/users/emailOTP',sendOTP);
+// app.post('/users/signup',async(req,res)=>{});
+// app.post('/users/signin',async(req,res)=>{});
 app.listen(4000);
 
