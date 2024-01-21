@@ -2,7 +2,7 @@
 import "./styles.css";
 function Signin() {
 return (
-    <section class="bg-red-100  min-h-screen flex items-center justify-center">
+    <section class=" bg-white min-h-screen flex items-center justify-center">
     <div class=" bg-white rounded-2xl shadow-2xl shadow-black py-2 px-0.25">   
         <div class="px-16">
         <h2 class="pt-4 text-black font-bold text-2xl"> Login</h2>

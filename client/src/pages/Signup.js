@@ -2,8 +2,8 @@
 
 function Signup(){
 return(    
-<section class=" min-h-screen flex  items-center justify-center bg-[#d82a2ad4]">
-<div class=" px-16 bg-[#f4eaea] py-3 border rounded-2xl shadow-xl shadow-slate-950">
+<section class=" min-h-screen flex  items-center justify-center bg-white">
+<div class=" px-16 bg-white py-3 border rounded-2xl shadow-xl shadow-slate-950">
     
         <h2 class="text-blue-900 text-2xl font-bold underline ">Signup</h2>
         <p class="text-black font-semibold text-sm mt-1">"Embrace the journey ahead.
