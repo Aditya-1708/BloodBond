@@ -29,7 +29,7 @@ return(
             
 
             <div class="flex justify-end">
-            <button class=" mt-6 w-full  text-sm text-white px-6 py-2 hover:bg-indigo-700 border rounded-xl border-blue-300 bg-blue-500">Signup</button>
+            <button class=" mt-6 w-full  text-sm text-white px-6 py-2 border rounded-xl border-blue-300  bg-red-500 hover:bg-red-800">Signup</button>
             </div>
             <div>
                 <button class="border -translate-y-72 border-blue-900 rounded-xl"><img src={arrow}/></button>

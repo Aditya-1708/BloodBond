@@ -6,10 +6,12 @@ import Email from './pages/Email';
 import Otp from './pages/Otp';
 import Details from './pages/Details'
 
+
 function App() {
   return (
     <>
-    <NavigationBar></NavigationBar>
+    
+    {/* <NavigationBar></NavigationBar> */}
     {/* <Signin></Signin> */}
     {/* <Signup></Signup> */}
     <Email></Email>
